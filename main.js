@@ -13,7 +13,7 @@ function categoryInCheckName(healthCheck, check) {
 
 module.exports = function (config, additionalChecks) {
     let healthCheckMap = startup(config, additionalChecks);
-    return{
+    return {
         asMap: () => healthCheckMap,
         asArray: () => {
             let healthCheckArray = [];
