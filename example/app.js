@@ -1,7 +1,7 @@
 'use strict';
 require('isomorphic-fetch');
-var path =require('path');
-var health = require('../main');
+var path = require('path'),
+    health = require('../main');
 
 
 
