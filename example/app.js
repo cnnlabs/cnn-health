@@ -1,8 +1,8 @@
 'use strict';
-require('isomorphic-fetch');
-var path =require('path');
-var health = require('../main');
+/*require('isomorphic-fetch');
+var path = require('path'),
+    health = require('../main');
 
 
 
-let checks = health();
+let checks = health();*/
