@@ -1,5 +1,18 @@
 # CNN Health Changelog
 
+## 2016-04-25, Version 0.0.3, @adslaton
+
+### Notable changes
+
+- Version bump due to npm publish issues
+
+
+### Known issues
+
+See https://github.com/cnnlabs/cnn-health/labels/defect for complete and
+current list of known issues.
+
+
 ## 2016-04-25, Version 0.0.2, @adslaton
 
 ### Notable changes
