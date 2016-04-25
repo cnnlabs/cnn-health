@@ -3,7 +3,12 @@ require('isomorphic-fetch');
 var health = require('../main'),
     config = require('./config');
 
-let checks = health(config);
+let checks = health(config),
+    array = checks.asArray() || [],
+    idx = 0;
 
-console.log(checks.asMap());
-console.log(checks.asArray());
+for (; idx < array.length; idx++) {
+    health.runCheck(array[idx]);
+
+    console.log(health.getCheck(array[idx]));
+}

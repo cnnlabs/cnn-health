@@ -36,7 +36,6 @@ module.exports.Check = Check;
 module.exports.status = status;
 
 module.exports.getCheck = (conf) => {
-    console.log(conf);
     return new checks[conf.type](conf);
 };
 
