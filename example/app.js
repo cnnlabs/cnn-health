@@ -1,8 +1,7 @@
 'use strict';
-/*require('isomorphic-fetch');
-var path = require('path'),
-    health = require('../main');
+require('isomorphic-fetch');
+var health = require('../main'),
+    config = require('./config');
 
-
-
-let checks = health();*/
+console.log(config);
+let checks = health(config);
