@@ -1,5 +1,23 @@
 # CNN Health Changelog
 
+## 2016-04-26, Version 0.1.0, @adslaton
+
+### Notable changes
+
+- Add example/app.js
+
+
+### Known issues
+
+See https://github.com/cnnlabs/cnn-health/labels/defect for complete and
+current list of known issues.
+
+* [[`de476d24ff`](https://github.com/cnn-labs/cnn-health/commit/de476d24ff)] - Merge pull request #3 from cnnlabs/feature/add-example-app (A.D. Slaton) 
+* [[`2e45ac92ef`](https://github.com/cnn-labs/cnn-health/commit/2e45ac92ef)] - update to example app (A.D. Slaton) 
+* [[`0416f98cfd`](https://github.com/cnn-labs/cnn-health/commit/0416f98cfd)] - adding example app (A.D. Slaton) 
+* [[`a1a24b90d4`](https://github.com/cnn-labs/cnn-health/commit/a1a24b90d4)] - change config to not be read from the fs (A.D. Slaton) 
+
+
 ## 2016-04-25, Version 0.0.3, @adslaton
 
 ### Notable changes
