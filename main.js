@@ -11,8 +11,13 @@ function categoryInCheckName(healthCheck, check) {
     return check;
 }
 
-module.exports = function (config, additionalChecks) {
-    let healthCheckMap = startup(config, additionalChecks);
+module.exports = function (config) {
+    if (typeof config === 'undefined' || config === null) {
+        throw new Error('healthcheck config is undefined');
+    }
+
+    let healthCheckMap = startup(config);
+
     return {
         asMap: () => healthCheckMap,
         asArray: () => {

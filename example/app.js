@@ -1,8 +1,14 @@
 'use strict';
-/*require('isomorphic-fetch');
-var path = require('path'),
-    health = require('../main');
+require('isomorphic-fetch');
+var health = require('../main'),
+    config = require('./config');
 
+let checks = health(config),
+    array = checks.asArray() || [],
+    idx = 0;
 
+for (; idx < array.length; idx++) {
+    health.runCheck(array[idx]);
 
-let checks = health();*/
+    console.log(health.getCheck(array[idx]));
+}

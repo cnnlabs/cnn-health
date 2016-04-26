@@ -1,12 +1,12 @@
 'use strict';
 module.exports = {
     name: 'json check fixture',
-    description: '',
+    description: 'json check fixture description',
     checks: [
         {
             type: 'json',
             name: 'CNN Homepage',
-            url: 'http://www.cnn.com/_healthcheck',
+            url: 'http://www.cnn.com/',
             severity: 2,
             businessImpact: 'Its a HUGE deal',
             technicalSummary: 'god knows',
