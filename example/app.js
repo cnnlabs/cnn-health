@@ -1,14 +1,8 @@
 'use strict';
 require('isomorphic-fetch');
-var health = require('../main'),
-    config = require('./config');
+const health = require('../main'),
+    path = require('path'),
+    otherChecks = require('./lib/customcheck')
 
-let checks = health(config),
-    array = checks.asArray() || [],
-    idx = 0;
 
-for (; idx < array.length; idx++) {
-    health.runCheck(array[idx]);
-
-    console.log(health.getCheck(array[idx]));
-}
+let checks = health(path.resolve(__dirname,'./config'),otherChecks)
