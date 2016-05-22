@@ -1,5 +1,8 @@
-const mongoCheck = require('./mongocheck');
+const timedCheck = require('./timedchecks');
+const returnArray =[];
 
-module.exports = {
-    mongo: mongoCheck
-}
+returnArray.push(timedCheck);
+
+
+module.exports = returnArray;
+

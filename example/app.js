@@ -5,4 +5,17 @@ const health = require('../main'),
     otherChecks = require('./lib/customcheck')
 
 
-let checks = health(path.resolve(__dirname,'./config'),otherChecks)
+let healthchecks = health(path.resolve(__dirname,'./config')).asArray()
+
+function test() {
+    let checks = healthchecks.map((check) => {
+        return check.getStatus();
+    });
+
+    console.log(checks);
+}
+
+
+
+setInterval(test, 2000);
+

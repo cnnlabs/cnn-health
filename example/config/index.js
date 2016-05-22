@@ -22,20 +22,20 @@ module.exports = {
                 return json.version;
             }
         },
-        {
-            type: 'mongo',
-            name: 'database',
-            collection: 'users',
-            severity: 2,
-            businessImpact: 'Its a HUGE deal',
-            technicalSummary: 'god knows',
-            panicGuide: 'Don\'t Panic',
-            checkResult: {
-                PASSED: 'Text if check passed',
-                FAILED: 'Text is check failed',
-                PENDING: 'This check has not yet run'
-            },
-            interval: '10s'
-        }
+        // {
+        //     type: 'mongo',
+        //     name: 'database',
+        //     collection: 'users',
+        //     severity: 2,
+        //     businessImpact: 'Its a HUGE deal',
+        //     technicalSummary: 'god knows',
+        //     panicGuide: 'Don\'t Panic',
+        //     checkResult: {
+        //         PASSED: 'Text if check passed',
+        //         FAILED: 'Text is check failed',
+        //         PENDING: 'This check has not yet run'
+        //     },
+        //     interval: '10s'
+        // }
     ]
 }
