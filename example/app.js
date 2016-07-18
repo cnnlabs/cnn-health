@@ -1,11 +1,10 @@
 'use strict';
 require('isomorphic-fetch');
 const health = require('../main'),
-    path = require('path'),
-    otherChecks = require('./lib/customcheck')
+    path = require('path');
 
 
-let healthchecks = health(path.resolve(__dirname,'./config')).asArray()
+let healthchecks = health(path.resolve(__dirname, './config')).asArray();
 
 function test() {
     let checks = healthchecks.map((check) => {
@@ -18,4 +17,3 @@ function test() {
 
 
 setInterval(test, 2000);
-
