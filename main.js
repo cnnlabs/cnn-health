@@ -41,7 +41,19 @@ module.exports.getCheck = (conf) => {
 };
 
 module.exports.runCheck = (conf) => {
-    //const check = new checks[conf.type](conf);
+    const check = new checks[conf.type](conf);
+    check.start();
+    return check;
+};
+
+
+module.exports.runCustomCheckClass = (CHECK, options) => {
+    const customCheck = new CHECK(options);
+    customCheck.start();
+    return customCheck;
+};
+
+module.exports.runCustomCheck = (conf) => {
     const check = new HealthChecks(conf, checks);
     check.start();
     return check;
