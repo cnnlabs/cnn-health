@@ -3,7 +3,6 @@
 require('isomorphic-fetch');
 const health = require('../main'),
     path = require('path'),
-    util = require('util'),
     customCheck = require('./lib/customcheck/custom.check'),
     tests = {
         BASICCHECK: 'BASIC',
@@ -74,7 +73,7 @@ function customHealthCheckConfig() {
                             let message;
 
                             if (!response.ok) {
-                                message = util.format('BadResponse %s', response.status);
+                                message = 'BadResponse ${response.status}';
                                 throw new Error(message);
                             }
 

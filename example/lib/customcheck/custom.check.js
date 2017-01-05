@@ -34,7 +34,7 @@ class CustomCheck extends Check {
                     let message;
 
                     if (!response.ok) {
-                        message = util.format('BadResponse %s', response.status);
+                        message = 'BadResponse ${response.status}';
                         throw new Error(message);
                     }
 
