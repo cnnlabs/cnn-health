@@ -34,7 +34,7 @@ class CustomCheck extends Check {
                     let message;
 
                     if (!response.ok) {
-                        message = 'BadResponse ${response.status}';
+                        message = `BadResponse ${response.status}`;
                         throw new Error(message);
                     }
 
