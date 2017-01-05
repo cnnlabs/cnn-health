@@ -1,5 +1,25 @@
 # CNN Health Changelog
 
+## 2016-04-26, Version 0.2.0, @adslaton
+
+### Notable changes
+
+- Add option to run health check with custom code
+
+### Known issues
+
+See https://github.com/cnnlabs/cnn-health/labels/defect for complete and
+current list of known issues.
+
+### Commits
+
+* [[`e1104e19e2`](https://github.com/cnn-labs/cnn-health/commit/e1104e19e2)] - Merge pull request #6 from zoitec/develop (A.D. Slaton)
+* [[`66fcf5cf56`](https://github.com/cnn-labs/cnn-health/commit/66fcf5cf56)] - removing util (Sean Joseph)
+* [[`95fbbe744b`](https://github.com/cnn-labs/cnn-health/commit/95fbbe744b)] - changes after code review (Sean Joseph)
+* [[`97cb1661f5`](https://github.com/cnn-labs/cnn-health/commit/97cb1661f5)] - changes after code review (Sean Joseph)
+* [[`b7855b3ee8`](https://github.com/cnn-labs/cnn-health/commit/b7855b3ee8)] - Add option to run health check with custom code (Sean Joseph)
+* [[`0441089f7f`](https://github.com/cnn-labs/cnn-health/commit/0441089f7f)] - Add option to run health check with custom code (Sean Joseph)
+
 ## 2016-04-26, Version 0.1.3, @adslaton
 
 ### Notable changes
