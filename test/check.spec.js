@@ -5,7 +5,6 @@ const Check = require('../src/check');
 describe('Check', () => {
     const mockConfig = { interval: 60000 };
 
-
     /**
      * constructor
      */

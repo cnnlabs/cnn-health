@@ -1,7 +1,6 @@
 const CONSTANTS = require('./constants');
 const ms = require('ms');
 
-
 /**
  * creates interval from string or numerical value
  * fallback to DEFAULT_CHECK_INTERVAL
