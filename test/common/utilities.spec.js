@@ -1,4 +1,5 @@
-const { CONSTANTS, UTILITIES } = require('../../src/common');
+const CONSTANTS = require('../../src/common/constants');
+const { makeInterval } = require('../../src/common/utilities');
 
 /**
  * Tests for utility functions
@@ -8,7 +9,6 @@ describe('UTILITIES', () => {
      * makeInterval()
      */
     describe('makeInterval()', () => {
-        const { makeInterval } = UTILITIES;
 
         it('should fallback to DEFAULT_CHECK_INTERVAL', () => {
             expect(makeInterval(null)).toBe(CONSTANTS.DEFAULT_CHECK_INTERVAL);
