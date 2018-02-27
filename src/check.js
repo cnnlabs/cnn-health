@@ -11,24 +11,23 @@ module.exports = class Check {
      */
     constructor(config) {
         this.interval = makeInterval(config.interval);
+        this._intervalID = null;
     }
 
     /**
      * runs check on given interval
      */
     start() {
-        if (!this._intervalID) {
-            this._intervalID = setInterval(this._tick, this.interval);
-        }
+        if (this._intervalID) return;
+        this._intervalID = setInterval(this._tick, this.interval);
     }
 
     /**
      * stop running this check
      */
     stop() {
-        if (this._intervalID) {
-            clearInterval(this._intervalID);
-        }
+        if (!this._intervalID) return;
+        clearInterval(this._intervalID);
     }
 
     /**

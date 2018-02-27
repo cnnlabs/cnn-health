@@ -14,7 +14,6 @@
         "arrow-spacing":               [2, {"before": true, "after": true}],
         "brace-style":                 [2, "1tbs", {"allowSingleLine": false}],
         "comma-spacing":               [2, {"before": false, "after": true}],
-        "curly":                       [2, "all"],
         "indent":                      [2, 4, {"SwitchCase": 1, "VariableDeclarator": 1}],
         "key-spacing":                 [2, {"beforeColon": false, "afterColon": true}],
         "keyword-spacing":             2,
