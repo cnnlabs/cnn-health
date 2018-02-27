@@ -1,10 +1,5 @@
 {
-    "title": "CNN Health",
-    "source": "./",
+    "source": "./src",
     "destination": "./docs",
-    "excludes": ["docs", "node_modules"],
-    "access": ["public", "protected", "private"],
-    "manual": {
-        "changelog": "./CHANGELOG.md"
-    }
+    "plugins": [{"name": "esdoc-standard-plugin"}]
 }

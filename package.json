@@ -4,8 +4,8 @@
   "description": "CNN Health",
   "main": "main.js",
   "scripts": {
-    "generate-changelog": "changelog-maker --group",
-    "generate-docs": "rm -rf docs && esdoc -c .esdoc.json",
+    "generate:changelog": "changelog-maker --group",
+    "generate:docs": "rm -rf docs && esdoc -c .esdoc.json",
     "test": "eslint *.js **/*.js && test/validate-json-files.sh"
   },
   "repository": {
@@ -27,7 +27,8 @@
   },
   "devDependencies": {
     "changelog-maker": "2.2.6",
-    "esdoc": "1.0.3",
+    "esdoc": "1.0.4",
+    "esdoc-standard-plugin": "1.0.0",
     "eslint": "4.8.0",
     "jq-cli-wrapper": "0.4.0",
     "jsonlint": "1.6.2"
