@@ -1,4 +1,4 @@
-const CONSTANTS = require('../src/constants');
+const { CONSTANTS } = require('../../src/common');
 
 /**
  * Tests for package constants
