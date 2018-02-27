@@ -1,4 +1,6 @@
+const { CHECK_STATES } = require('../src/common/constants');
 const Check = require('../src/check');
+
 /**
  * Tests for Check class
  */
@@ -8,15 +10,24 @@ describe('Check', () => {
     /**
      * constructor
      */
-    it('should convert given check interval', () => {
-        const tests = {
-            '1m': 60000,
-            60: 60
-        };
+    describe('constructor()', () => {
 
-        Object.keys(tests).map(testValue => {
-            const check = new Check({interval: testValue});
-            expect(check.interval).toBe(tests[testValue]);
+        it('should convert given check interval', () => {
+            const tests = {
+                '1m': 60000,
+                60: 60
+            };
+
+            Object.keys(tests).map(testValue => {
+                const check = new Check({interval: testValue});
+                expect(check.interval).toBe(tests[testValue]);
+            });
+        });
+
+        it('should be created in the STOPPED state', () => {
+            const check = new Check(mockConfig);
+
+            expect(check.state).toBe(CHECK_STATES.STOPPED);
         });
     });
 
@@ -35,6 +46,7 @@ describe('Check', () => {
             check.start();
 
             // assert
+            expect(check.state).toBe(CHECK_STATES.PENDING);
             expect(setInterval).toHaveBeenCalledTimes(1);
             expect(setInterval).toHaveBeenLastCalledWith(
                 expect.any(Function),
@@ -75,6 +87,7 @@ describe('Check', () => {
             check.stop();
 
             // assert
+            expect(check.state).toBe(CHECK_STATES.STOPPED);
             expect(clearInterval).toHaveBeenCalledTimes(1);
             expect(clearInterval).toHaveBeenLastCalledWith(intervalID);
         });
@@ -92,6 +105,50 @@ describe('Check', () => {
             // assert
             expect(clearInterval).toHaveBeenCalledTimes(0);
         });
+    });
+
+    /**
+     * _tick()
+     */
+    describe('_tick()', () => {
+        // mock check adapter
+        let mockCheckResponse;
+        let mockAdapter = {};
+
+        beforeEach(() => {
+            // reset mock between tests
+            mockCheckResponse = {output: null, passed: true};
+            mockAdapter.runCheck = jest.fn(() => Promise.resolve(mockCheckResponse));
+        });
+
+        it('should call adapter::runCheck()', () => {
+            // constants
+            const check = new Check(mockConfig, mockAdapter);
+
+            // mock behavior
+            mockAdapter.runCheck.mockReturnValue(Promise.resolve(mockCheckResponse));
+
+            // sut
+            check._tick();
+
+            // assert
+            expect(mockAdapter.runCheck).toHaveBeenCalledTimes(1);
+        });
+
+        it('check should be in failed state when adapter::runCheck() does not pass', async () => {
+            // constants
+            const check = new Check(mockConfig, mockAdapter);
+
+            // mock behavior
+            mockCheckResponse.passed = false;
+
+            // sut
+            await check._tick();
+
+            // assert
+            expect(check.state).toBe(CHECK_STATES.FAILED);
+        });
+
     });
 });
 
