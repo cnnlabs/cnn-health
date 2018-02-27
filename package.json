@@ -6,7 +6,7 @@
   "scripts": {
     "generate:changelog": "changelog-maker --group",
     "generate:docs": "rm -rf docs && esdoc -c .esdoc.json",
-    "test": "eslint *.js **/*.js && test/validate-json-files.sh"
+    "test": "eslint *.js **/*.js && jest"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "esdoc": "1.0.4",
     "esdoc-standard-plugin": "1.0.0",
     "eslint": "4.8.0",
+    "jest": "22.4.2",
     "jsonlint": "1.6.2"
   },
   "license": "ISC"

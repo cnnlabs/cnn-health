@@ -2,7 +2,8 @@
     "extends": "eslint:recommended",
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "jest": true
     },
     "parserOptions": {
         "ecmaVersion": 6,
@@ -21,8 +22,6 @@
         "linebreak-style":             [2, "unix"],
         "no-console":                  0,
         "no-trailing-spaces":          2,
-        "object-curly-spacing":        [2, "never"],
-        "one-var":                     [2, "always"],
         "prefer-template":             2,
         "quote-props":                 [2, "as-needed"],
         "quotes":                      [2, "single"],
