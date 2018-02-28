@@ -26,6 +26,7 @@ describe('HealthCheckAdapter', () => {
     it('hb() should return object with keys [passed, output]', () => {
         const adapter = new HealthCheckAdapter(opts);
         const tests = [
+            { test: [true], expect: [true, null] },
             { test: [true, null], expect: [true, null] },
             { test: [false, null], expect: [false, null] },
             { test: [true, 'test-output'], expect: [true, 'test-output'] },
