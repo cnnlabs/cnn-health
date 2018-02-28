@@ -50,9 +50,16 @@ module.exports = class Check {
      * @private
      */
     async _tick() {
-        // run check
-        const checkResponse = await this.adapter.runCheck();
-        const nextState = checkResponse.passed ? CHECK_STATES.PASSED : CHECK_STATES.FAILED;
+        let nextState;
+
+        try {
+            const { passed } = await this.adapter.runCheck();
+            nextState = passed ? CHECK_STATES.PASSING : CHECK_STATES.FAILED;
+
+        } catch (err) {
+            nextState = CHECK_STATES.FAILED;
+        }
+
         this.transition(nextState);
     }
 };

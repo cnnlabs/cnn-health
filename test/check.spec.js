@@ -135,12 +135,42 @@ describe('Check', () => {
             expect(mockAdapter.runCheck).toHaveBeenCalledTimes(1);
         });
 
+        it('check should be in passing state when adapter::runCheck() passes', async () => {
+            // constants
+            const check = new Check(mockConfig, mockAdapter);
+
+            // mock behavior
+            mockCheckResponse.passed = true;
+
+            // sut
+            await check._tick();
+
+            // assert
+            expect(check.state).toBe(CHECK_STATES.PASSING);
+        });
+
         it('check should be in failed state when adapter::runCheck() does not pass', async () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
 
             // mock behavior
             mockCheckResponse.passed = false;
+
+            // sut
+            await check._tick();
+
+            // assert
+            expect(check.state).toBe(CHECK_STATES.FAILED);
+        });
+
+        it('check should be in failed state when adapter::runCheck() throws error', async () => {
+            // constants
+            const check = new Check(mockConfig, mockAdapter);
+
+            // mock behavior
+            mockAdapter.runCheck = () => {
+                throw new Error;
+            };
 
             // sut
             await check._tick();
