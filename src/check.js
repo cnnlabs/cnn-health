@@ -20,23 +20,12 @@ module.exports = class Check {
     }
 
     /**
-     * transition to next state
-     *
-     * @param {string} nextState - state to transition to
-     * @param {string|null} nextOutput - adapter output
-     */
-    transition(nextState, nextOutput = null) {
-        this.state = nextState;
-        this.output = nextOutput;
-    }
-
-    /**
      * runs check on given interval
      */
     start() {
         if (this._intervalID) return;
         this._intervalID = setInterval(this._tick, this.interval);
-        this.transition(CHECK_STATES.PENDING);
+        this._transition(CHECK_STATES.PENDING);
     }
 
     /**
@@ -45,7 +34,19 @@ module.exports = class Check {
     stop() {
         if (!this._intervalID) return;
         clearInterval(this._intervalID);
-        this.transition(CHECK_STATES.STOPPED);
+        this._transition(CHECK_STATES.STOPPED);
+    }
+
+    /**
+     * transition to next state
+     *
+     * @param {string} nextState - state to transition to
+     * @param {string|null} nextOutput - adapter output
+     * @private
+     */
+    _transition(nextState, nextOutput = null) {
+        this.state = nextState;
+        this.output = nextOutput;
     }
 
     /**
@@ -72,6 +73,6 @@ module.exports = class Check {
         }
 
         // update state
-        this.transition(nextState, nextOutput);
+        this._transition(nextState, nextOutput);
     }
 };
