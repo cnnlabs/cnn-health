@@ -9,21 +9,25 @@ module.exports = class Check {
      * constructor
      *
      * @param {object} config - check settings
+     * @param {HealthCheckAdapter} adapter - check adapter
      */
     constructor(config, adapter) {
         this.state = CHECK_STATES.STOPPED;
         this.adapter = adapter;
         this.interval = makeInterval(config.interval);
         this._intervalID = null;
+        this.output = null;
     }
 
     /**
      * transition to next state
      *
      * @param {string} nextState - state to transition to
+     * @param {string|null} nextOutput - adapter output
      */
-    transition(nextState) {
+    transition(nextState, nextOutput = null) {
         this.state = nextState;
+        this.output = nextOutput;
     }
 
     /**
@@ -51,15 +55,23 @@ module.exports = class Check {
      */
     async _tick() {
         let nextState;
+        let nextOutput;
 
         try {
-            const { passed } = await this.adapter.heartbeat();
+            // send heartbeat to adapter
+            const { passed, output } = await this.adapter.heartbeat();
+
+            // compute next state
             nextState = passed ? CHECK_STATES.PASSING : CHECK_STATES.FAILED;
+            nextOutput = output;
 
         } catch (err) {
+            // err: heartbeat failed
             nextState = CHECK_STATES.FAILED;
+            nextOutput = String(err);
         }
 
-        this.transition(nextState);
+        // update state
+        this.transition(nextState, nextOutput);
     }
 };

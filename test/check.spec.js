@@ -166,10 +166,11 @@ describe('Check', () => {
         it('check should be in failed state when adapter::heartbeat() throws error', async () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
+            const errMessage = 'test-error';
 
             // mock behavior
             mockAdapter.heartbeat = () => {
-                throw new Error;
+                throw new Error(errMessage);
             };
 
             // sut
@@ -177,6 +178,7 @@ describe('Check', () => {
 
             // assert
             expect(check.state).toBe(CHECK_STATES.FAILED);
+            expect(check.output).toContain(errMessage);
         });
 
     });
