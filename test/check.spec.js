@@ -118,24 +118,24 @@ describe('Check', () => {
         beforeEach(() => {
             // reset mock between tests
             mockCheckResponse = {output: null, passed: true};
-            mockAdapter.runCheck = jest.fn(() => Promise.resolve(mockCheckResponse));
+            mockAdapter.heartbeat = jest.fn(() => Promise.resolve(mockCheckResponse));
         });
 
-        it('should call adapter::runCheck()', () => {
+        it('should call adapter::heartbeat()', () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
 
             // mock behavior
-            mockAdapter.runCheck.mockReturnValue(Promise.resolve(mockCheckResponse));
+            mockAdapter.heartbeat.mockReturnValue(Promise.resolve(mockCheckResponse));
 
             // sut
             check._tick();
 
             // assert
-            expect(mockAdapter.runCheck).toHaveBeenCalledTimes(1);
+            expect(mockAdapter.heartbeat).toHaveBeenCalledTimes(1);
         });
 
-        it('check should be in passing state when adapter::runCheck() passes', async () => {
+        it('check should be in passing state when adapter::heartbeat() passes', async () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
 
@@ -149,7 +149,7 @@ describe('Check', () => {
             expect(check.state).toBe(CHECK_STATES.PASSING);
         });
 
-        it('check should be in failed state when adapter::runCheck() does not pass', async () => {
+        it('check should be in failed state when adapter::heartbeat() does not pass', async () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
 
@@ -163,12 +163,12 @@ describe('Check', () => {
             expect(check.state).toBe(CHECK_STATES.FAILED);
         });
 
-        it('check should be in failed state when adapter::runCheck() throws error', async () => {
+        it('check should be in failed state when adapter::heartbeat() throws error', async () => {
             // constants
             const check = new Check(mockConfig, mockAdapter);
 
             // mock behavior
-            mockAdapter.runCheck = () => {
+            mockAdapter.heartbeat = () => {
                 throw new Error;
             };
 

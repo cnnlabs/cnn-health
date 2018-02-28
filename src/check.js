@@ -53,7 +53,7 @@ module.exports = class Check {
         let nextState;
 
         try {
-            const { passed } = await this.adapter.runCheck();
+            const { passed } = await this.adapter.heartbeat();
             nextState = passed ? CHECK_STATES.PASSING : CHECK_STATES.FAILED;
 
         } catch (err) {

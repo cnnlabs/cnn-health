@@ -15,13 +15,28 @@ module.exports = class HealthCheckAdapter {
     }
 
     /**
+     * creates heartbeat object 
+     * 
+     * @param {boolean} isPassing - did the check pass
+     * @param {string} output - adapter output
+     * @returns {object} - heartbeat object
+     */
+    hb(isPassing, output = null) {
+        return { 
+            passed: !!isPassing,
+            output: !!output ? String(output) : null
+        };
+    }
+
+    /**
      * run health check for this adapter
      *
      * @throws Error when missing concrete implementation
+     * @returns {object} - heartbeat object
      * @abstract
      */
-    runCheck() {
-        throw new Error('runCheck() must be implemented by adapter class.')
+    async heartbeat() {
+        throw new Error('execute() must be implemented by adapter class.')
     }
 };
 
