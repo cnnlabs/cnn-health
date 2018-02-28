@@ -1,4 +1,4 @@
-const HealthCheckAdapter = require('../../src/adapters/adapter');
+const HealthCheckAdapter = require('../src/adapter');
 /**
  * Tests for HealthCheckAdapter
  */
@@ -13,7 +13,7 @@ describe('HealthCheckAdapter', () => {
     it('heartbeat() should throw error when not implemented', async () => {
         const adapter = new HealthCheckAdapter(opts);
         let didThrowError = false;
-        
+
         try {
             await adapter.heartbeat();
         } catch (e) {
@@ -21,7 +21,7 @@ describe('HealthCheckAdapter', () => {
         }
 
         expect(didThrowError).toBe(true);
-    })
+    });
 
     it('hb() should return object with keys [passed, output]', () => {
         const adapter = new HealthCheckAdapter(opts);
@@ -35,8 +35,8 @@ describe('HealthCheckAdapter', () => {
         tests.map(test => {
             const hb = adapter.hb(...test.test);
             expect(hb.passed).toBe(test.expect[0]);
-            expect(hb.output).toBe(test.expect[1])
-        })
-    })
+            expect(hb.output).toBe(test.expect[1]);
+        });
+    });
 });
 

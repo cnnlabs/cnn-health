@@ -22,9 +22,9 @@ module.exports = class HealthCheckAdapter {
      * @returns {object} - heartbeat object
      */
     hb(isPassing, output = null) {
-        return { 
+        return {
             passed: !!isPassing,
-            output: !!output ? String(output) : null
+            output: output ? String(output) : null
         };
     }
 
@@ -36,7 +36,7 @@ module.exports = class HealthCheckAdapter {
      * @abstract
      */
     async heartbeat() {
-        throw new Error('execute() must be implemented by adapter class.')
+        throw new Error('execute() must be implemented by adapter class.');
     }
 };
 
