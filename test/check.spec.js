@@ -1,11 +1,18 @@
-const { CHECK_STATES } = require('../src/common/constants');
+const { CHECK_STATES, CHECK_DESCRIPTION_PROPERTIES } = require('../src/common/constants');
 const Check = require('../src/check');
 
 /**
  * Tests for Check class
  */
 describe('Check', () => {
-    const mockConfig = { interval: 60000 };
+    // mock config
+    const mockConfig = {
+        interval: 60000,
+        description: CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
+            map[prop] = 'test';
+            return map;
+        }, {})
+    };
 
     /**
      * constructor
@@ -19,7 +26,8 @@ describe('Check', () => {
             };
 
             Object.keys(tests).map(testValue => {
-                const check = new Check({interval: testValue});
+                const opts = Object.assign({}, mockConfig, {interval: testValue});
+                const check = new Check(opts);
                 expect(check.interval).toBe(tests[testValue]);
             });
         });

@@ -1,5 +1,5 @@
 const { CHECK_STATES } = require('./common/constants');
-const { makeInterval } = require('./common/utilities');
+const { makeInterval, makeDescription } = require('./common/utilities');
 
 /**
  * Health Check
@@ -12,7 +12,7 @@ module.exports = class Check {
      */
     constructor(config) {
         // properties
-        this.description = config.description;
+        this.description = makeDescription(config.description);
         this.interval = makeInterval(config.interval);
         this.adapter = config.adapter;
 
