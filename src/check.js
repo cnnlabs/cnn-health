@@ -17,8 +17,7 @@ module.exports = class Check {
         this._adapter = config.adapter;
 
         // initial runtime state
-        this._status = CHECK_STATES.STOPPED;
-        this._output = null;
+        this._state = { status: CHECK_STATES.STOPPED, output: null };
         this._timer = null;
     }
 
@@ -27,10 +26,7 @@ module.exports = class Check {
      * @returns {object} - current status,output of check
      */
     get currentState() {
-        return {
-            status: this._status,
-            output: this._output
-        };
+        return this._state;
     }
 
     /**
@@ -62,13 +58,12 @@ module.exports = class Check {
     /**
      * transition to next state
      *
-     * @param {string} nextState - state to transition to
-     * @param {string|null} nextOutput - adapter output
+     * @param {string} status - state to transition to
+     * @param {string|null} output - adapter output
      * @private
      */
-    _transition(nextState, nextOutput = null) {
-        this._status = nextState;
-        this._output = nextOutput;
+    _transition(status, output = null) {
+        this._state = {status, output};
     }
 
     /**
