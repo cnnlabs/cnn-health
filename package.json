@@ -6,7 +6,8 @@
   "scripts": {
     "generate:changelog": "changelog-maker --group",
     "generate:docs": "rm -rf docs && esdoc -c .esdoc.json",
-    "test": "eslint *.js **/*.js && jest"
+    "test": "eslint *.js **/*.js && jest",
+    "test:cov": "yarn test --coverage"
   },
   "repository": {
     "type": "git",
