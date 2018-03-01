@@ -27,7 +27,7 @@ describe('Check', () => {
         it('should be created in the STOPPED state', () => {
             const check = new Check(mockConfig);
 
-            expect(check.state).toBe(CHECK_STATES.STOPPED);
+            expect(check.currentState.status).toBe(CHECK_STATES.STOPPED);
         });
     });
 
@@ -46,7 +46,7 @@ describe('Check', () => {
             check.start();
 
             // assert
-            expect(check.state).toBe(CHECK_STATES.PENDING);
+            expect(check.currentState.status).toBe(CHECK_STATES.PENDING);
             expect(setInterval).toHaveBeenCalledTimes(1);
             expect(setInterval).toHaveBeenLastCalledWith(
                 expect.any(Function),
@@ -87,7 +87,7 @@ describe('Check', () => {
             check.stop();
 
             // assert
-            expect(check.state).toBe(CHECK_STATES.STOPPED);
+            expect(check.currentState.status).toBe(CHECK_STATES.STOPPED);
             expect(clearInterval).toHaveBeenCalledTimes(1);
             expect(clearInterval).toHaveBeenLastCalledWith(intervalID);
         });
@@ -115,15 +115,17 @@ describe('Check', () => {
         let mockCheckResponse;
         let mockAdapter = {};
 
+
         beforeEach(() => {
             // reset mock between tests
             mockCheckResponse = {output: null, passed: true};
             mockAdapter.heartbeat = jest.fn(() => Promise.resolve(mockCheckResponse));
+            mockConfig.adapter = mockAdapter;
         });
 
         it('should call adapter::heartbeat()', () => {
             // constants
-            const check = new Check(mockConfig, mockAdapter);
+            const check = new Check(mockConfig);
 
             // mock behavior
             mockAdapter.heartbeat.mockReturnValue(Promise.resolve(mockCheckResponse));
@@ -137,7 +139,7 @@ describe('Check', () => {
 
         it('check should be in passing state when adapter::heartbeat() passes', async () => {
             // constants
-            const check = new Check(mockConfig, mockAdapter);
+            const check = new Check(mockConfig);
 
             // mock behavior
             mockCheckResponse.passed = true;
@@ -146,7 +148,7 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.state).toBe(CHECK_STATES.PASSING);
+            expect(check.currentState.status).toBe(CHECK_STATES.PASSING);
         });
 
         it('check should be in failed state when adapter::heartbeat() does not pass', async () => {
@@ -160,12 +162,12 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.state).toBe(CHECK_STATES.FAILED);
+            expect(check.currentState.status).toBe(CHECK_STATES.FAILED);
         });
 
         it('check should be in failed state when adapter::heartbeat() throws error', async () => {
             // constants
-            const check = new Check(mockConfig, mockAdapter);
+            const check = new Check(mockConfig);
             const errMessage = 'test-error';
 
             // mock behavior
@@ -177,10 +179,9 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.state).toBe(CHECK_STATES.FAILED);
-            expect(check.output).toContain(errMessage);
+            expect(check.currentState.status).toBe(CHECK_STATES.FAILED);
+            expect(check.currentState.output).toContain(errMessage);
         });
-
     });
 });
 

@@ -1,5 +1,5 @@
-const { makeInterval } = require('./common/utilities');
 const { CHECK_STATES } = require('./common/constants');
+const { makeInterval } = require('./common/utilities');
 
 /**
  * Health Check
@@ -9,22 +9,35 @@ module.exports = class Check {
      * constructor
      *
      * @param {object} config - check settings
-     * @param {HealthCheckAdapter} adapter - check adapter
      */
-    constructor(config, adapter) {
-        this.state = CHECK_STATES.STOPPED;
-        this.adapter = adapter;
+    constructor(config) {
+        // properties
+        this.description = config.description;
         this.interval = makeInterval(config.interval);
-        this._intervalID = null;
-        this.output = null;
+        this.adapter = config.adapter;
+
+        // initial runtime state
+        this._status = CHECK_STATES.STOPPED;
+        this._output = null;
+        this._timer = null;
+    }
+
+    /**
+     * retrieve current state of check
+     */
+    get currentState() {
+        return {
+            status: this._status,
+            output: this._output
+        };
     }
 
     /**
      * runs check on given interval
      */
     start() {
-        if (this._intervalID) return;
-        this._intervalID = setInterval(this._tick, this.interval);
+        if (this._timer) return;
+        this._timer = setInterval(this._tick, this.interval);
         this._transition(CHECK_STATES.PENDING);
     }
 
@@ -32,8 +45,8 @@ module.exports = class Check {
      * stop running this check
      */
     stop() {
-        if (!this._intervalID) return;
-        clearInterval(this._intervalID);
+        if (!this._timer) return;
+        clearInterval(this._timer);
         this._transition(CHECK_STATES.STOPPED);
     }
 
@@ -45,8 +58,8 @@ module.exports = class Check {
      * @private
      */
     _transition(nextState, nextOutput = null) {
-        this.state = nextState;
-        this.output = nextOutput;
+        this._status = nextState;
+        this._output = nextOutput;
     }
 
     /**
