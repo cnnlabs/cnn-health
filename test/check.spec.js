@@ -28,14 +28,18 @@ describe('Check', () => {
             Object.keys(tests).map(testValue => {
                 const opts = Object.assign({}, mockConfig, {interval: testValue});
                 const check = new Check(opts);
-                expect(check.interval).toBe(tests[testValue]);
+                expect(check._interval).toBe(tests[testValue]);
             });
         });
 
         it('should be created in the STOPPED state', () => {
             const check = new Check(mockConfig);
-
             expect(check.currentState.status).toBe(CHECK_STATES.STOPPED);
+        });
+
+        it('should have expected description', () => {
+            const check = new Check(mockConfig);
+            expect(check.desc).toBe(mockConfig.description);
         });
     });
 

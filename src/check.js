@@ -12,9 +12,9 @@ module.exports = class Check {
      */
     constructor(config) {
         // properties
-        this.description = makeDescription(config.description);
-        this.interval = makeInterval(config.interval);
-        this.adapter = config.adapter;
+        this._description = makeDescription(config.description);
+        this._interval = makeInterval(config.interval);
+        this._adapter = config.adapter;
 
         // initial runtime state
         this._status = CHECK_STATES.STOPPED;
@@ -24,6 +24,7 @@ module.exports = class Check {
 
     /**
      * retrieve current state of check
+     * @returns {object} - current status,output of check
      */
     get currentState() {
         return {
@@ -33,11 +34,19 @@ module.exports = class Check {
     }
 
     /**
+     * retrieve check description
+     * @returns {object} - description
+     */
+    get desc() {
+        return this._description;
+    }
+
+    /**
      * runs check on given interval
      */
     start() {
         if (this._timer) return;
-        this._timer = setInterval(this._tick, this.interval);
+        this._timer = setInterval(this._tick, this._interval);
         this._transition(CHECK_STATES.PENDING);
     }
 
@@ -73,7 +82,7 @@ module.exports = class Check {
 
         try {
             // send heartbeat to adapter
-            const { passed, output } = await this.adapter.heartbeat();
+            const { passed, output } = await this._adapter.heartbeat();
 
             // compute next state
             nextState = passed ? CHECK_STATES.PASSING : CHECK_STATES.FAILED;
