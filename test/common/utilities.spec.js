@@ -36,8 +36,11 @@ describe('UTILITIES', () => {
      * makeDescription()
      */
     describe('makeDescription()', () => {
-        const requiredProps = ['name'];
-        const mockProps = {name: 'test-check'};
+        // create valid desc object
+        const mockProps = CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
+            map[prop] = 'test';
+            return map;
+        }, {});
 
         it('should return a valid description object', () => {
             const desc = makeDescription(mockProps);

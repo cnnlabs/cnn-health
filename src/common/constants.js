@@ -16,3 +16,16 @@ module.exports.CHECK_STATES = {
     PASSING: 'PASSING',
     FAILED: 'FAILED',
 };
+
+/**
+ * properties that are required to describe a health-check instance
+ *
+ * @type {array} - list of required properties
+ */
+module.exports.CHECK_DESCRIPTION_PROPERTIES = [
+    'name',
+    'severity',
+    'panicGuide',
+    'businessImpact',
+    'technicalSummary'
+];
