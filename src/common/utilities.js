@@ -11,3 +11,14 @@ const ms = require('ms');
 module.exports.makeInterval = function (value) {
     return (typeof value === 'string') ? ms(value) : (value || CONSTANTS.DEFAULT_CHECK_INTERVAL);
 };
+
+
+module.exports.makeDescription = function(desc) {
+    // throw err on missing properties
+    ['name'].map(prop => {
+        if (desc.hasOwnProperty(prop)) return;
+        throw new Error(`check-description is missing property ${prop} for check ${desc.name}`);
+    });
+
+    return desc;
+};

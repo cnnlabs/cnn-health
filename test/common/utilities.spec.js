@@ -1,5 +1,5 @@
 const CONSTANTS = require('../../src/common/constants');
-const { makeInterval } = require('../../src/common/utilities');
+const { makeInterval, makeDescription } = require('../../src/common/utilities');
 
 /**
  * Tests for utility functions
@@ -29,6 +29,28 @@ describe('UTILITIES', () => {
 
             // compare result to value from map
             Object.keys(tests).map((v) => expect(makeInterval(v)).toBe(tests[v]));
+        });
+    });
+
+    /**
+     * makeDescription()
+     */
+    describe('makeDescription()', () => {
+        const requiredProps = ['name'];
+        const mockProps = {name: 'test-check'};
+
+        it('should return a valid description object', () => {
+            const desc = makeDescription(mockProps);
+            expect(desc).toEqual(mockProps);
+        });
+
+        it('should throw error on missing properties', () => {
+            const tests = [{}];
+
+            tests.map(props => {
+                const mkObj = () => makeDescription(props);
+                expect(mkObj).toThrow();
+            });
         });
     });
 });
