@@ -9,11 +9,13 @@ module.exports = class Check {
      * constructor
      *
      * @param {object} config - check settings
+     * @param {func|null} onStatusChange - called when status changes with current state
      */
-    constructor(config) {
+    constructor(config, onStatusChange = null) {
         // properties
         this._description = makeCheckDescription(config.description);
         this._interval = makeInterval(config.interval);
+        this._onStatusChange = onStatusChange;
         this._adapter = config.adapter;
 
         // initial runtime state
@@ -68,6 +70,9 @@ module.exports = class Check {
 
         // update state
         this._state = {status, output};
+
+        // notify
+        if (this._onStatusChange) this._onStatusChange(this._state);
     }
 
     /**

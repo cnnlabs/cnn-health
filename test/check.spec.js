@@ -164,7 +164,7 @@ describe('Check', () => {
 
         it('check should be in failed state when adapter::heartbeat() does not pass', async () => {
             // constants
-            const check = new Check(mockConfig, mockAdapter);
+            const check = new Check(mockConfig);
 
             // mock behavior
             mockCheckResponse.passed = false;
@@ -198,6 +198,37 @@ describe('Check', () => {
     /**
      * _transition()
      */
-    describe('_transition()', () => {});
+    describe('_transition()', () => {
+
+        it('should notify listener on status change', () => {
+            // constants
+            const reporter = jest.fn();
+            const check = new Check(mockConfig, reporter);
+
+            // sut
+            check._transition(CHECK_STATUS.PASSING, 'test-output');
+
+            // assert
+            expect(reporter).toHaveBeenCalledTimes(1);
+            expect(reporter).toHaveBeenCalledWith(check._state);
+        });
+
+        it('should not notify listeners when status and output are unchanged', () => {
+            // constants
+            const reporter = jest.fn();
+            const check = new Check(mockConfig, reporter);
+            const checkStatus = CHECK_STATUS.PASSING;
+            const checkOutput = 'test-output';
+
+            // initial state
+            check._state = {status: checkStatus, output: checkOutput};
+
+            // sut
+            check._transition(checkStatus, checkOutput);
+
+            // assert
+            expect(reporter).toHaveBeenCalledTimes(0);
+        });
+    });
 });
 
