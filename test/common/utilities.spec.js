@@ -28,7 +28,7 @@ describe('UTILITIES', () => {
             };
 
             // compare result to value from map
-            Object.keys(tests).map((v) => expect(makeInterval(v)).toBe(tests[v]));
+            Object.keys(tests).forEach(v => expect(makeInterval(v)).toBe(tests[v]));
         });
     });
 
@@ -50,7 +50,7 @@ describe('UTILITIES', () => {
         it('should throw error on missing properties', () => {
             const tests = [{}];
 
-            tests.map(props => {
+            tests.forEach(props => {
                 const mkObj = () => makeDescription(props);
                 expect(mkObj).toThrow();
             });

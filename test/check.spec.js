@@ -25,7 +25,7 @@ describe('Check', () => {
                 60: 60
             };
 
-            Object.keys(tests).map(testValue => {
+            Object.keys(tests).forEach(testValue => {
                 const opts = Object.assign({}, mockConfig, {interval: testValue});
                 const check = new Check(opts);
                 expect(check._interval).toBe(tests[testValue]);

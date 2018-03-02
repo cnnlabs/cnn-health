@@ -33,7 +33,7 @@ describe('HealthCheckAdapter', () => {
             { test: [false, 'test-output'], expect: [false, 'test-output'] }
         ];
 
-        tests.map(test => {
+        tests.forEach(test => {
             const hb = adapter.hb(...test.test);
             expect(hb.passed).toBe(test.expect[0]);
             expect(hb.output).toBe(test.expect[1]);

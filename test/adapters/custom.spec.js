@@ -44,7 +44,7 @@ describe('CustomCheckAdapter', () => {
                 () => ({output: ''})
             ]
 
-            tests.map(async fn => {
+            tests.forEach(async fn => {
                 const adapter = new CustomAdapter({heartbeat: fn});
                 const hb = await adapter.heartbeat();
                 expect(hb.passed).toBe(false);

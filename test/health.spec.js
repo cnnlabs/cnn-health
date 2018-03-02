@@ -19,7 +19,7 @@ describe('Health', () => {
                 [new MockCheck]
             ];
 
-            tests.map(t => {
+            tests.forEach(t => {
                 const health = new Health(t);
                 expect(health).toBeInstanceOf(Health);
                 expect(health.checks).toBe(t);
