@@ -19,12 +19,14 @@ module.exports.makeInterval = function (value) {
  * @return {object} - validated description
  * @throws {Error} - on invalid description object
  */
-module.exports.makeDescription = function(desc) {
+module.exports.makeCheckDescription = function(desc) {
     // throw err on missing properties
-    CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.map(prop => {
-        if (desc.hasOwnProperty(prop)) return;
-        throw new Error(`check-description is missing property ${prop} for check ${desc.name}`);
-    });
+    const existingKeys = Object.keys(desc);
+    const missingProperties = CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.filter(p => !existingKeys.includes(p));
+
+    if (missingProperties.length) {
+        throw new Error(`check-description is missing properties (${missingProperties.join(', ')}) for check ${desc.name}`);
+    }
 
     return desc;
 };

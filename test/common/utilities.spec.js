@@ -1,5 +1,5 @@
 const CONSTANTS = require('../../src/common/constants');
-const { makeInterval, makeDescription } = require('../../src/common/utilities');
+const { makeInterval, makeCheckDescription } = require('../../src/common/utilities');
 
 /**
  * Tests for utility functions
@@ -33,9 +33,9 @@ describe('UTILITIES', () => {
     });
 
     /**
-     * makeDescription()
+     * makeCheckDescription()
      */
-    describe('makeDescription()', () => {
+    describe('makeCheckDescription()', () => {
         // create valid desc object
         const mockProps = CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
             map[prop] = 'test';
@@ -43,7 +43,7 @@ describe('UTILITIES', () => {
         }, {});
 
         it('should return a valid description object', () => {
-            const desc = makeDescription(mockProps);
+            const desc = makeCheckDescription(mockProps);
             expect(desc).toEqual(mockProps);
         });
 
@@ -51,7 +51,7 @@ describe('UTILITIES', () => {
             const tests = [{}];
 
             tests.forEach(props => {
-                const mkObj = () => makeDescription(props);
+                const mkObj = () => makeCheckDescription(props);
                 expect(mkObj).toThrow();
             });
         });
