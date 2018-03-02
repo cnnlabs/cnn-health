@@ -1,3 +1,4 @@
+const { CHECK_STATUS } = require('../src/common/constants');
 const Health = require('../src/health');
 /**
  * Tests for Health class
@@ -19,6 +20,11 @@ describe('Health', () => {
                 expect(health).toBeInstanceOf(Health);
                 expect(health._checks).toEqual(t);
             });
+        });
+
+        it('should be created in the STOPPED state', () => {
+            const health = new Health([]);
+            expect(health.currentState.status).toBe(CHECK_STATUS.STOPPED);
         });
     });
 

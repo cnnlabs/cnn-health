@@ -27,7 +27,7 @@ module.exports = class Health {
      *
      * @returns {object} - current state
      */
-    get status() {
+    get currentState() {
         return this._state;
     }
 
