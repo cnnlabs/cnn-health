@@ -194,5 +194,10 @@ describe('Check', () => {
             expect(check.currentState.output).toContain(errMessage);
         });
     });
+
+    /**
+     * _transition()
+     */
+    describe('_transition()', () => {});
 });
 

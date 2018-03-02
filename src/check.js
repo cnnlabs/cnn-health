@@ -63,6 +63,10 @@ module.exports = class Check {
      * @private
      */
     _transition(status, output = null) {
+        // no transition if state hasn't changed
+        if (this._state.status === status && this._state.output === output) return;
+
+        // update state
         this._state = {status, output};
     }
 
