@@ -18,14 +18,13 @@ describe('Check', () => {
      * constructor
      */
     describe('constructor()', () => {
+        const tests = {
+            '1m': 60000,
+            60: 60
+        };
 
-        it('should convert given check interval', () => {
-            const tests = {
-                '1m': 60000,
-                60: 60
-            };
-
-            Object.keys(tests).forEach(testValue => {
+        Object.keys(tests).forEach(testValue => {
+            it('should convert given check interval', () => {
                 const opts = Object.assign({}, mockConfig, {interval: testValue});
                 const check = new Check(opts);
                 expect(check._interval).toBe(tests[testValue]);

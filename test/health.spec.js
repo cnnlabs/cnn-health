@@ -12,14 +12,13 @@ describe('Health', () => {
      * constructor()
      */
     describe('constructor()', () => {
+        const tests = [
+            [],
+            [new MockCheck]
+        ];
 
-        it('should accept a list of check objects', () => {
-            const tests = [
-                [],
-                [new MockCheck]
-            ];
-
-            tests.forEach(t => {
+        tests.forEach(t => {
+            it('should accept a list of check objects', () => {
                 const health = new Health(t);
                 expect(health).toBeInstanceOf(Health);
                 expect(health.checks).toBe(t);

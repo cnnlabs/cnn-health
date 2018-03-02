@@ -37,14 +37,15 @@ describe('CustomCheckAdapter', () => {
             expect(opts.heartbeat).toHaveBeenCalledTimes(1);
         });
 
-        it('should return failed heartbeat when custom check does not return a heartbeat object', async () => {
-            const tests = [
-                () => false,
-                () => ({}),
-                () => ({output: ''})
-            ]
+        // heartbeat failures
+        const tests = [
+            () => false,
+            () => ({}),
+            () => ({output: ''})
+        ]
 
-            tests.forEach(async fn => {
+        tests.forEach(async fn => {
+            it('should return failed heartbeat when custom check does not return a heartbeat object', async () => {
                 const adapter = new CustomAdapter({heartbeat: fn});
                 const hb = await adapter.heartbeat();
                 expect(hb.passed).toBe(false);

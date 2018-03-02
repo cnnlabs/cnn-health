@@ -20,15 +20,12 @@ describe('UTILITIES', () => {
             expect(makeInterval(value)).toBe(value);
         });
 
-        it('should convert string representation to number', () => {
-            // string to value map of tests
-            const tests = {
-                '1m': 60000,
-                '1h': (60000 * 60)
-            };
-
-            // compare result to value from map
-            Object.keys(tests).forEach(v => expect(makeInterval(v)).toBe(tests[v]));
+        // string to value map of tests
+        const tests = { '1m': 60000, '1h': (60000 * 60) };
+        Object.keys(tests).forEach(v => {
+            it('should convert string representation to number', () => {
+                expect(makeInterval(v)).toBe(tests[v])
+            });
         });
     });
 
