@@ -1,4 +1,5 @@
 const { CHECK_STATUS } = require('./common/constants');
+const { makeCheck} = require('./common/utilities');
 /**
  * Health
  * health-check runner
@@ -10,7 +11,8 @@ module.exports = class Health {
      * @param {array} checks - healthchecks
      */
     constructor(checks) {
-        this.checks = checks;
+        // create checks
+        this._checks = checks.map(cfg => makeCheck(cfg));
 
         // initial state
         this._state = {
@@ -33,14 +35,14 @@ module.exports = class Health {
      * start running all configured checks
      */
     start() {
-        this.checks.forEach(c => c.start());
+        this._checks.forEach(c => c.start());
     }
 
     /**
      * stop running all configured checks
      */
     stop() {
-        this.checks.forEach(c => c.stop());
+        this._checks.forEach(c => c.stop());
     }
 };
 

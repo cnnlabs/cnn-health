@@ -1,27 +1,23 @@
-const CheckAdapter = require('../src/adapter');
 const Health = require('../src/health');
-
 /**
  * Tests for Health class
  */
 describe('Health', () => {
-    // mock check adapter
-    class MockCheck extends CheckAdapter {}
-
+    const mockCheck = jest.mock('../src/check');
     /**
      * constructor()
      */
     describe('constructor()', () => {
         const tests = [
             [],
-            [new MockCheck]
+            [mockCheck]
         ];
 
         tests.forEach(t => {
             it('should accept a list of check objects', () => {
                 const health = new Health(t);
                 expect(health).toBeInstanceOf(Health);
-                expect(health.checks).toBe(t);
+                expect(health._checks).toEqual(t);
             });
         });
     });
@@ -33,7 +29,6 @@ describe('Health', () => {
 
         it('should call start() on each check', () => {
             // mock check start fn
-            const mockCheck = new MockCheck;
             mockCheck.start = jest.fn();
 
             // create health
@@ -54,7 +49,6 @@ describe('Health', () => {
 
         it('should call stop() on each check', () => {
             // mock check stop fn
-            const mockCheck = new MockCheck;
             mockCheck.stop = jest.fn();
 
             // create health

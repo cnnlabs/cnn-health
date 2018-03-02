@@ -30,3 +30,13 @@ module.exports.makeCheckDescription = function(desc) {
 
     return desc;
 };
+
+/**
+ * creates check-object from config
+ *
+ * @param {object} config - check configuration
+ * @returns {Check} - check object
+ */
+module.exports.makeCheck = function(config) {
+    return config;
+}
