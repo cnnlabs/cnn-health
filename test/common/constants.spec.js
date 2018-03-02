@@ -10,13 +10,13 @@ describe('CONSTANTS', () => {
         expect(CONSTANTS.DEFAULT_CHECK_INTERVAL).toBe(60000);
     });
 
-    it('possible check states are PASSING, FAILED, and INS_DATA', () => {
+    it('possible check statuses are STOPPED, PENDING, PASSING, and FAILED', () => {
         // map of available states
-        const STATES = CONSTANTS.CHECK_STATES;
+        const STATUSES = CONSTANTS.CHECK_STATUS;
 
         // each state should return non-null in map
-        ['PASSING', 'FAILING', 'INS_DATA']
-            .forEach((s) => expect(STATES[s]).not.toBeNull());
+        ['STOPPED', 'PENDING', 'PASSING', 'FAILED']
+            .forEach((s) => expect(STATUSES[s]).not.toBeNull());
     });
 });
 

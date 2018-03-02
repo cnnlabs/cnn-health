@@ -1,4 +1,4 @@
-const { CHECK_STATES, CHECK_DESCRIPTION_PROPERTIES } = require('../src/common/constants');
+const { CHECK_STATUS, CHECK_DESCRIPTION_PROPERTIES } = require('../src/common/constants');
 const Check = require('../src/check');
 
 /**
@@ -34,7 +34,7 @@ describe('Check', () => {
 
         it('should be created in the STOPPED state', () => {
             const check = new Check(mockConfig);
-            expect(check.currentState.status).toBe(CHECK_STATES.STOPPED);
+            expect(check.currentState.status).toBe(CHECK_STATUS.STOPPED);
         });
 
         it('should have expected description', () => {
@@ -58,7 +58,7 @@ describe('Check', () => {
             check.start();
 
             // assert
-            expect(check.currentState.status).toBe(CHECK_STATES.PENDING);
+            expect(check.currentState.status).toBe(CHECK_STATUS.PENDING);
             expect(setInterval).toHaveBeenCalledTimes(1);
             expect(setInterval).toHaveBeenLastCalledWith(
                 expect.any(Function),
@@ -99,7 +99,7 @@ describe('Check', () => {
             check.stop();
 
             // assert
-            expect(check.currentState.status).toBe(CHECK_STATES.STOPPED);
+            expect(check.currentState.status).toBe(CHECK_STATUS.STOPPED);
             expect(clearInterval).toHaveBeenCalledTimes(1);
             expect(clearInterval).toHaveBeenLastCalledWith(intervalID);
         });
@@ -160,7 +160,7 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.currentState.status).toBe(CHECK_STATES.PASSING);
+            expect(check.currentState.status).toBe(CHECK_STATUS.PASSING);
         });
 
         it('check should be in failed state when adapter::heartbeat() does not pass', async () => {
@@ -174,7 +174,7 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.currentState.status).toBe(CHECK_STATES.FAILED);
+            expect(check.currentState.status).toBe(CHECK_STATUS.FAILED);
         });
 
         it('check should be in failed state when adapter::heartbeat() throws error', async () => {
@@ -191,7 +191,7 @@ describe('Check', () => {
             await check._tick();
 
             // assert
-            expect(check.currentState.status).toBe(CHECK_STATES.FAILED);
+            expect(check.currentState.status).toBe(CHECK_STATUS.FAILED);
             expect(check.currentState.output).toContain(errMessage);
         });
     });

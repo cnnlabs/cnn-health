@@ -6,11 +6,11 @@
 module.exports.DEFAULT_CHECK_INTERVAL = 60000;
 
 /**
- * check states
+ * check status
  *
- * @type {object} - possible states for a given check
+ * @type {object} - possible statuses for a given check
  */
-module.exports.CHECK_STATES = {
+module.exports.CHECK_STATUS = {
     STOPPED: 'STOPPED',
     PENDING: 'PENDING',
     PASSING: 'PASSING',

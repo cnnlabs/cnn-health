@@ -1,4 +1,4 @@
-const { CHECK_STATES } = require('./common/constants');
+const { CHECK_STATUS } = require('./common/constants');
 const { makeInterval, makeDescription } = require('./common/utilities');
 
 /**
@@ -17,7 +17,7 @@ module.exports = class Check {
         this._adapter = config.adapter;
 
         // initial runtime state
-        this._state = { status: CHECK_STATES.STOPPED, output: null };
+        this._state = { status: CHECK_STATUS.STOPPED, output: null };
         this._timer = null;
     }
 
@@ -43,7 +43,7 @@ module.exports = class Check {
     start() {
         if (this._timer) return;
         this._timer = setInterval(this._tick, this._interval);
-        this._transition(CHECK_STATES.PENDING);
+        this._transition(CHECK_STATUS.PENDING);
     }
 
     /**
@@ -52,13 +52,13 @@ module.exports = class Check {
     stop() {
         if (!this._timer) return;
         clearInterval(this._timer);
-        this._transition(CHECK_STATES.STOPPED);
+        this._transition(CHECK_STATUS.STOPPED);
     }
 
     /**
      * transition to next state
      *
-     * @param {string} status - state to transition to
+     * @param {string} status - status to transition to
      * @param {string|null} output - adapter output
      * @private
      */
@@ -72,7 +72,7 @@ module.exports = class Check {
      * @private
      */
     async _tick() {
-        let nextState;
+        let nextStatus;
         let nextOutput;
 
         try {
@@ -80,16 +80,16 @@ module.exports = class Check {
             const { passed, output } = await this._adapter.heartbeat();
 
             // compute next state
-            nextState = passed ? CHECK_STATES.PASSING : CHECK_STATES.FAILED;
+            nextStatus = passed ? CHECK_STATUS.PASSING : CHECK_STATUS.FAILED;
             nextOutput = output;
 
         } catch (err) {
             // err: heartbeat failed
-            nextState = CHECK_STATES.FAILED;
+            nextStatus = CHECK_STATUS.FAILED;
             nextOutput = String(err);
         }
 
         // update state
-        this._transition(nextState, nextOutput);
+        this._transition(nextStatus, nextOutput);
     }
 };
