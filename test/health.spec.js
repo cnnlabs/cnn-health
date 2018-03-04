@@ -1,17 +1,17 @@
 const { CHECK_STATUS } = require('../src/common/constants');
 const Health = require('../src/health');
+const MockCheck = require('./mocks/check');
 /**
  * Tests for Health class
  */
 describe('Health', () => {
-    const mockCheck = jest.mock('../src/check');
     /**
      * constructor()
      */
     describe('constructor()', () => {
         const tests = [
             [],
-            [mockCheck]
+            [new MockCheck]
         ];
 
         tests.forEach(t => {
@@ -34,6 +34,8 @@ describe('Health', () => {
     describe('start()', () => {
 
         it('should call start() on each check', () => {
+            const mockCheck = new MockCheck;
+
             // mock check start fn
             mockCheck.start = jest.fn();
 
@@ -54,6 +56,8 @@ describe('Health', () => {
     describe('stop()', () => {
 
         it('should call stop() on each check', () => {
+            const mockCheck = new MockCheck;
+
             // mock check stop fn
             mockCheck.stop = jest.fn();
 

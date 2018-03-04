@@ -1,5 +1,5 @@
 const { CHECK_STATUS } = require('./common/constants');
-const { makeInterval, makeCheckDescription } = require('./common/utilities');
+const UTIL = require('./common/utilities');
 
 /**
  * Health Check
@@ -13,10 +13,8 @@ module.exports = class Check {
      */
     constructor(config, onStatusChange = null) {
         // properties
-        this._description = makeCheckDescription(config.description);
-        this._interval = makeInterval(config.interval);
+        this._configure(config);
         this._onStatusChange = onStatusChange;
-        this._adapter = config.adapter;
 
         // initial runtime state
         this._state = { status: CHECK_STATUS.STOPPED, output: null };
@@ -55,6 +53,17 @@ module.exports = class Check {
         if (!this._timer) return;
         clearInterval(this._timer);
         this._transition(CHECK_STATUS.STOPPED);
+    }
+
+    /**
+     * initialize check instance from the given config object
+     * 
+     * @param {object} config - check configuration
+     */
+    _configure(config) {
+        this._description = UTIL.makeCheckDescription(config.description);
+        this._interval = UTIL.makeInterval(config.interval);
+        this._adapter = config.adapter;
     }
 
     /**

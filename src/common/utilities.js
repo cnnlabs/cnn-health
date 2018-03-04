@@ -1,6 +1,6 @@
 const CONSTANTS = require('./constants');
+const Check = require('../check');
 const ms = require('ms');
-
 /**
  * creates interval from string or numerical value
  * fallback to DEFAULT_CHECK_INTERVAL
@@ -38,5 +38,5 @@ module.exports.makeCheckDescription = function(desc) {
  * @returns {Check} - check object
  */
 module.exports.makeCheck = function(config) {
-    return config;
-}
+    return (config instanceof Check) ? config : new Check(config);
+};

@@ -1,5 +1,7 @@
 const CONSTANTS = require('../../src/common/constants');
-const { makeInterval, makeCheckDescription } = require('../../src/common/utilities');
+const { makeInterval, makeCheckDescription, makeCheck } = require('../../src/common/utilities');
+const Check = require('../../src/check');
+const MockCheck = require('../mocks/check');
 
 /**
  * Tests for utility functions
@@ -53,5 +55,26 @@ describe('UTILITIES', () => {
             });
         });
     });
-});
 
+    /**
+     * makeCheck()
+     */
+    describe('makeCheck()', () => {
+        // create valid desc object
+        const mockProps = CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
+            map[prop] = 'test';
+            return map;
+        }, {});
+
+        it('should return parameter if given instance of check', () => {
+            const expected = new MockCheck;
+            const actual = makeCheck(expected);
+            expect(actual).toBe(expected);
+        });
+
+        it('should create new instance of check if given a config object', () => {
+            const actual = makeCheck({description:mockProps});
+            expect(actual).toBeInstanceOf(Check);
+        });
+    });
+});
