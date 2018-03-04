@@ -63,7 +63,7 @@ module.exports = class Check {
     _configure(config) {
         this._description = UTIL.makeCheckDescription(config.description);
         this._interval = UTIL.makeInterval(config.interval);
-        this._adapter = config.adapter;
+        this._adapter = UTIL.makeCheckAdapter(config.type, config.options);
     }
 
     /**

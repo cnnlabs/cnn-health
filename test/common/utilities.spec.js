@@ -62,10 +62,16 @@ describe('UTILITIES', () => {
      */
     describe('makeCheck()', () => {
         // create valid desc object
-        const mockProps = CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
-            map[prop] = 'test';
-            return map;
-        }, {});
+        const mockProps = {
+            type: 'custom',
+            description: CONSTANTS.CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
+                map[prop] = 'test';
+                return map;
+            }, {}),
+            options: {
+                heartbeat: () => {}
+            }
+        };
 
         it('should return parameter if given instance of check', () => {
             const expected = new MockCheck;
@@ -74,7 +80,7 @@ describe('UTILITIES', () => {
         });
 
         it('should create new instance of check if given a config object', () => {
-            const actual = makeCheck({description:mockProps});
+            const actual = makeCheck(mockProps);
             expect(actual).toBeInstanceOf(Check);
         });
     });

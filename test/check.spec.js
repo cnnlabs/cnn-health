@@ -7,11 +7,15 @@ const Check = require('../src/check');
 describe('Check', () => {
     // mock config
     const mockConfig = {
+        type: 'custom',
         interval: 60000,
         description: CHECK_DESCRIPTION_PROPERTIES.reduce((map, prop) => {
             map[prop] = 'test';
             return map;
-        }, {})
+        }, {}),
+        options: {
+            heartbeat: () => {}
+        }
     };
 
     /**
@@ -124,14 +128,11 @@ describe('Check', () => {
     describe('_tick()', () => {
         // mock check adapter
         let mockCheckResponse;
-        let mockAdapter = {};
-
 
         beforeEach(() => {
             // reset mock between tests
             mockCheckResponse = {output: null, passed: true};
-            mockAdapter.heartbeat = jest.fn(() => Promise.resolve(mockCheckResponse));
-            mockConfig.adapter = mockAdapter;
+            mockConfig.options.heartbeat = jest.fn(() => Promise.resolve(mockCheckResponse));
         });
 
         it('should call adapter::heartbeat()', () => {
@@ -139,13 +140,13 @@ describe('Check', () => {
             const check = new Check(mockConfig);
 
             // mock behavior
-            mockAdapter.heartbeat.mockReturnValue(Promise.resolve(mockCheckResponse));
+            mockConfig.options.heartbeat.mockReturnValue(Promise.resolve(mockCheckResponse));
 
             // sut
             check._tick();
 
             // assert
-            expect(mockAdapter.heartbeat).toHaveBeenCalledTimes(1);
+            expect(mockConfig.options.heartbeat).toHaveBeenCalledTimes(1);
         });
 
         it('check should be in passing state when adapter::heartbeat() passes', async () => {
@@ -181,8 +182,8 @@ describe('Check', () => {
             const check = new Check(mockConfig);
             const errMessage = 'test-error';
 
-            // mock behavior
-            mockAdapter.heartbeat = () => {
+            // patch adapter to throw error
+            check._adapter.heartbeat = () => {
                 throw new Error(errMessage);
             };
 
