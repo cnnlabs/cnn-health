@@ -1,7 +1,8 @@
 const CONSTANTS = require('../../src/common/constants');
-const { makeInterval, makeCheckDescription, makeCheck } = require('../../src/common/utilities');
+const { makeInterval, makeCheckDescription, makeCheck, makeCheckAdapter } = require('../../src/common/utilities');
 const Check = require('../../src/check');
 const MockCheck = require('../mocks/check');
+const CheckAdapter = require('../../src/adapter');
 
 /**
  * Tests for utility functions
@@ -75,6 +76,24 @@ describe('UTILITIES', () => {
         it('should create new instance of check if given a config object', () => {
             const actual = makeCheck({description:mockProps});
             expect(actual).toBeInstanceOf(Check);
+        });
+    });
+
+    /**
+     * makeCheckAdapter()
+     */
+    describe('makeCheckAdapter()', () => {
+
+        it('should throw error on invalid adapter type', () => {
+            const creator = () => makeCheckAdapter('invalid-type');
+            expect(creator).toThrow();
+        });
+
+        it('should create adapter with given options', () => {
+            const options = {param1: 'test-value', heartbeat: () => {}};
+            const adapter = makeCheckAdapter('custom', options);
+            expect(adapter).toBeInstanceOf(CheckAdapter);
+            expect(adapter.options).toBe(options);
         });
     });
 });

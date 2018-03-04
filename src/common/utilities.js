@@ -1,4 +1,5 @@
 const CONSTANTS = require('./constants');
+const ADAPTERS = require('../adapters');
 const Check = require('../check');
 const ms = require('ms');
 /**
@@ -39,4 +40,18 @@ module.exports.makeCheckDescription = function(desc) {
  */
 module.exports.makeCheck = function(config) {
     return (config instanceof Check) ? config : new Check(config);
+};
+
+/**
+ * creates check adapter
+ *
+ * @param {string} type - adapter type
+ * @param {object|null} options - adapter options
+ */
+module.exports.makeCheckAdapter = function(type, options = {}) {
+    // guard against invalid adapter type
+    if (!ADAPTERS.hasOwnProperty(type)) throw new Error(`Adapter of type '${type}' not found.`);
+
+    // create adapter with given options
+    return new ADAPTERS[type](options);
 };
