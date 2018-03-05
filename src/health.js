@@ -18,7 +18,7 @@ module.exports = class Health {
         // initial state
         this._state = {
             status: CHECK_STATUS.STOPPED,
-            healthy: null,
+            healthy: true,
             checks: {}
         };
 
