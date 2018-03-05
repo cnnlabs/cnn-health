@@ -8,7 +8,7 @@
 
 ## Requirements
 
-[Node 4.2.6+](https://npmjs.org)
+[Node 8.0.0+](https://npmjs.org)
 
 
 ## Installation

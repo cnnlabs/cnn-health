@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/cnn-labs/cnn-health",
   "engines": {
-    "node": ">4.2.6"
+    "node": ">8.0.0"
   },
   "dependencies": {
     "debug": "3.1.0",
