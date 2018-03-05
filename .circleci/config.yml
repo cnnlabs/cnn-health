@@ -34,7 +34,7 @@ jobs:
       - run: yarn test:cov
 
       # make test results available
-      - store_test_results:
+      - store_artifacts:
           path: 'coverage/lcov-report'
 
 
