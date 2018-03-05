@@ -1,27 +1,40 @@
 version: 2
-
+#
+# CircleCI build settings
+#
 jobs:
   build:
-    docker:
-      - image: circleci/node:7.10
-
+    # source will be pulled into the 'repo' directory
     working_directory: ~/repo
 
+    # use a node:8.0 container for running this build plan
+    docker:
+      - image: circleci/node:8.0
+
     steps:
+      # pull down source
       - checkout
 
+      # restore npm cache
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
 
+      # install dependencies
       - run: yarn install
 
+      # cache dependencies
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: yarn test
+      # run tests with coverage
+      - run: yarn test:cov
+
+      # make test results available
+      - store_test_results:
+          path: 'coverage/lcov-report'
 
 
