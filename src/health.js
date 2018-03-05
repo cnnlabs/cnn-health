@@ -48,8 +48,8 @@ module.exports = class Health {
      */
     start() {
         if (this._state.status !== CHECK_STATUS.STOPPED) return;
-        this._checks.forEach(c => c.start());
         this._transition(CHECK_STATUS.PENDING);
+        this._checks.forEach(c => c.start());
     }
 
     /**
@@ -57,8 +57,8 @@ module.exports = class Health {
      */
     stop() {
         if (this._state.status === CHECK_STATUS.STOPPED) return;
-        this._checks.forEach(c => c.stop());
         this._transition(CHECK_STATUS.STOPPED);
+        this._checks.forEach(c => c.stop());
     }
 
     /**
