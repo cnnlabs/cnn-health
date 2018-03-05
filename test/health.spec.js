@@ -185,15 +185,6 @@ describe('Health', () => {
             // sut
             health._handleStatusChange(passingCheck);
 
-            // const isPas = Object.values(health._state.checks)
-            //     .reduce((isPassing, check) => {
-            //         console.log(check, 'ok');
-            //         const isCheckPassing = check.currentState.status === CHECK_STATUS.PASSING;
-            //         return isCheckPassing ? isPassing : false;
-            //     }, true);
-
-            // const a = Object.values(health._state.checks).reduce((isPassing, check) => check.currentState.status === CHECK_STATUS.PASSING ? isPassing : false, true);
-
             // assert
             expect(health.currentState.status).toBe(CHECK_STATUS.FAILED);
             expect(health.currentState.healthy).toBe(false);
