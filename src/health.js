@@ -28,7 +28,7 @@ module.exports = class Health {
             const check = makeCheck(cfg, this._handleStatusChange.bind(this));
 
             // record initial state
-            this._state[check.name] = check.currentState;
+            this._state.checks[check.name] = check.currentState;
 
             return check;
         });
@@ -67,8 +67,25 @@ module.exports = class Health {
      * @param {object} check - check status to record
      */
     _handleStatusChange(check) {
+        const checkState = check.currentState;
+
         // record check status
-        this._state[check.name] = check.currentState;
+        this._state.checks[check.name] = checkState;
+
+        if (this._state.healthy && checkState.status !== CHECK_STATUS.PASSING) {
+            // transition to 'unhealthy' state
+            this._state.healthy = false;
+            this._state.status = CHECK_STATUS.FAILED;
+        }
+
+        if (!this._state.healthy && checkState.status === CHECK_STATUS.PASSING) {
+            // check other checks and transition if necessary
+            const allHealthy = Object.values(this._state.checks).reduce((isPassing, check) => check.status === CHECK_STATUS.PASSING ? isPassing : false, true);
+            if (allHealthy) {
+                this._state.healthy = true;
+                this._state.status = CHECK_STATUS.PASSING;
+            }
+        }
 
         // notify listeners
         if (this._onStatusChange) this._onStatusChange(this._state);
