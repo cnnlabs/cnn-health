@@ -2,7 +2,8 @@
   "name": "cnn-health",
   "version": "0.3.0",
   "description": "CNN Health",
-  "main": "main.js",
+  "main": "src/health.js",
+  "license": "ISC",
   "scripts": {
     "generate:changelog": "changelog-maker --group",
     "generate:docs": "rm -rf docs && esdoc -c .esdoc.json",
@@ -18,7 +19,7 @@
   },
   "homepage": "https://github.com/cnn-labs/cnn-health",
   "engines": {
-    "node": ">8.0.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "debug": "3.1.0",
@@ -33,6 +34,5 @@
     "eslint": "4.8.0",
     "jest": "22.4.2",
     "jsonlint": "1.6.2"
-  },
-  "license": "ISC"
+  }
 }
