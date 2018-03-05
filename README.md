@@ -34,10 +34,21 @@ const config = [
         type: 'json',
 
         // description of this check
-        description: { name: 'example-check' },
+        description: {
+            name: 'example-check',
+            severity: 'BAD',
+            panicGuide: "Don't Panic",
+            businessImpact: 'Who Knows',
+            technicalSummary: '...'
+        },
 
         // options for adapter
-        options: { url: 'http://localhost/example.json' }
+        options: {
+            url: 'http://localhost/example.json',
+            callback(data) {
+                return true;
+            }
+        }
     }
 ];
 

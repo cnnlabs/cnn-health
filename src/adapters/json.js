@@ -11,7 +11,7 @@ module.exports = class CustomCheckAdapter extends HealthCheckAdapter {
 
         // options should include url and callback fn
         if (!options || !options.url || !options.callback) {
-            throw new Error("json check adapter must define 'url' option");
+            throw new Error("json check adapter must define 'url' and 'callback' options");
         }
     }
 
