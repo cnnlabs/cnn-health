@@ -22,6 +22,15 @@ module.exports = class Check {
     }
 
     /**
+     * getter to retrieve check name
+     *
+     * @returns {string} - name of check
+     */
+    get name() {
+        return this.desc.name;
+    }
+
+    /**
      * retrieve current state of check
      * @returns {object} - current status,output of check
      */

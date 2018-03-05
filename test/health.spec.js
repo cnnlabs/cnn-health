@@ -71,5 +71,24 @@ describe('Health', () => {
             expect(mockCheck.stop).toHaveBeenCalledTimes(1);
         });
     });
+
+    /**
+     * _handleStatusChange()
+     */
+    describe('_handleStatusChange()', () => {
+
+        it('should record state of given check object', () => {
+            const expectedState = {passed: true, output: null};
+            const checkName = 'test-check';
+            const mockCheck = new MockCheck(checkName, expectedState);
+            const health = new Health([]);
+
+            // sut
+            health._handleStatusChange(mockCheck);
+
+            // assert
+            expect(health.currentState[checkName]).toEqual(expectedState);
+        });
+    });
 });
 
