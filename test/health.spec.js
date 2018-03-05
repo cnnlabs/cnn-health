@@ -48,6 +48,23 @@ describe('Health', () => {
             // assert
             expect(mockCheck.start).toHaveBeenCalledTimes(1);
         });
+
+        it('should return if already running', () => {
+            const mockCheck = new MockCheck;
+
+            // mock check start fn
+            mockCheck.start = jest.fn();
+
+            // create health
+            const health = new Health([mockCheck]);
+
+            // sut
+            health.start();
+            health.start();
+
+            // assert
+            expect(mockCheck.start).toHaveBeenCalledTimes(1);
+        });
     });
 
     /**
@@ -60,11 +77,32 @@ describe('Health', () => {
 
             // mock check stop fn
             mockCheck.stop = jest.fn();
+            mockCheck.start = jest.fn();
 
-            // create health
+            // create health, start check to change status
             const health = new Health([mockCheck]);
+            health.start();
 
             // sut
+            health.stop();
+
+            // assert
+            expect(mockCheck.stop).toHaveBeenCalledTimes(1);
+        });
+
+        it('should return if not running', () => {
+            const mockCheck = new MockCheck;
+
+            // mock check stop fn
+            mockCheck.stop = jest.fn();
+            mockCheck.start = jest.fn();
+
+            // create health, start check to change status
+            const health = new Health([mockCheck]);
+            health.start();
+
+            // sut
+            health.stop();
             health.stop();
 
             // assert
@@ -101,6 +139,37 @@ describe('Health', () => {
             // assert
             expect(mockChangeListener).toHaveBeenCalledTimes(1);
             expect(mockChangeListener).toHaveBeenCalledWith(health._state);
+        });
+    });
+
+    /**
+     * _transition()
+     */
+    describe('_transition()', () => {
+
+        it('should return if state has not changed', () => {
+            const onStatusChange = jest.fn();
+            const health = new Health([], onStatusChange);
+
+            // patch to pending state
+            health._state.status = CHECK_STATUS.PENDING;
+
+            // sut
+            health._transition(CHECK_STATUS.PENDING);
+
+            // assert
+            expect(onStatusChange).toHaveBeenCalledTimes(0);
+        });
+
+        it('should notify listeners on state change', () => {
+            const onStatusChange = jest.fn();
+            const health = new Health([], onStatusChange);
+
+            // sut
+            health._transition(CHECK_STATUS.PENDING);
+
+            // assert
+            expect(onStatusChange).toHaveBeenCalledTimes(1);
         });
     });
 });

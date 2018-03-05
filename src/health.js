@@ -35,6 +35,33 @@ module.exports = class Health {
     }
 
     /**
+     * retrieve current state of all health-checks
+     *
+     * @returns {object} - current state
+     */
+    get currentState() {
+        return this._state;
+    }
+
+    /**
+     * start running all configured checks
+     */
+    start() {
+        if (this._state.status !== CHECK_STATUS.STOPPED) return;
+        this._checks.forEach(c => c.start());
+        this._transition(CHECK_STATUS.PENDING);
+    }
+
+    /**
+     * stop running all configured checks
+     */
+    stop() {
+        if (this._state.status === CHECK_STATUS.STOPPED) return;
+        this._checks.forEach(c => c.stop());
+        this._transition(CHECK_STATUS.STOPPED);
+    }
+
+    /**
      * react to status updates from running checks
      *
      * @param {object} check - check status to record
@@ -48,26 +75,20 @@ module.exports = class Health {
     }
 
     /**
-     * retrieve current state of all health-checks
+     * transition to next state
      *
-     * @returns {object} - current state
+     * @param {string} status - status to transition to
+     * @private
      */
-    get currentState() {
-        return this._state;
-    }
+    _transition(status) {
+        // no transition if state hasn't changed
+        if (this._state.status === status) return;
 
-    /**
-     * start running all configured checks
-     */
-    start() {
-        this._checks.forEach(c => c.start());
-    }
+        // update state
+        this._state.status = status;
 
-    /**
-     * stop running all configured checks
-     */
-    stop() {
-        this._checks.forEach(c => c.stop());
+        // notify
+        if (this._onStatusChange) this._onStatusChange(this._state);
     }
 };
 
