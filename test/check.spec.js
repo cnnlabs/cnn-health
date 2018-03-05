@@ -211,7 +211,7 @@ describe('Check', () => {
 
             // assert
             expect(reporter).toHaveBeenCalledTimes(1);
-            expect(reporter).toHaveBeenCalledWith(check._state);
+            expect(reporter).toHaveBeenCalledWith(check);
         });
 
         it('should not notify listeners when status and output are unchanged', () => {

@@ -99,7 +99,7 @@ module.exports = class Check {
         this._state = {status, output};
 
         // notify
-        if (this._onStatusChange) this._onStatusChange(this._state);
+        if (this._onStatusChange) this._onStatusChange(this);
     }
 
     /**
