@@ -38,6 +38,15 @@ module.exports = class Check {
     }
 
     /**
+     * setter for status-change handler
+     *
+     * @param {func} callback - status-change handler
+     */
+    set onStatusChange(callback) {
+        this._onStatusChange = callback;
+    }
+
+    /**
      * runs check on given interval
      */
     start() {

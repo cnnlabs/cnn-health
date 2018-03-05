@@ -38,8 +38,18 @@ module.exports.makeCheckDescription = function(desc) {
  * @param {object} config - check configuration
  * @returns {Check} - check object
  */
-module.exports.makeCheck = function(config) {
-    return (config instanceof Check) ? config : new Check(config);
+module.exports.makeCheck = function(config, onStatusChange = null) {
+    let check;
+    if (config instanceof Check) {
+        // add handler to existing check
+        check = config;
+        check.onStatusChange = onStatusChange;
+
+    } else {
+        // create new check object
+        check = new Check(config, onStatusChange);
+    }
+    return check;
 };
 
 /**

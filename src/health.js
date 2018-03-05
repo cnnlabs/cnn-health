@@ -12,7 +12,7 @@ module.exports = class Health {
      */
     constructor(checks) {
         // create checks
-        this._checks = checks.map(cfg => makeCheck(cfg));
+        this._checks = checks.map(cfg => makeCheck(cfg, this._handleStatusChange));
 
         // initial state
         this._state = {
@@ -21,6 +21,11 @@ module.exports = class Health {
             checks: []
         };
     }
+
+    /**
+     * react to status updates from running checks
+     */
+    _handleStatusChange() {}
 
     /**
      * retrieve current state of all health-checks
