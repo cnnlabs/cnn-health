@@ -13,13 +13,60 @@
 ## Installation
 
 ```shell
-$ npm install
+$ npm install :repo_url
 ```
-
 
 ## Usage
 
-See example/app.js
+- create config obj with checks you wish to run
+- create health object from config
+- start health checks
+- inspect health status as needed
+- and/or supply a callback for status change notifications
+
+```javascript
+const Health = require('cnn-health');
+
+// healthchecks
+const config = [
+    {
+        // type of adapter to use
+        type: 'json',
+
+        // description of this check
+        description: { name: 'example-check' },
+
+        // options for adapter
+        options: { url: 'http://localhost/example.json' }
+    }
+];
+
+// status-change handler
+function onStatusChange(nextState) {
+    console.log(nextState.healthy);
+    console.log(nextState.status);
+    console.log(nextState.checks);
+}
+
+// create instance of cnn-health with config and optional callback
+const health = new Health(config, onStatusChange);
+
+// start health checks
+health.start();
+
+// retrieve current state of all checks
+health.currentState;
+
+// stop health checks
+health.stop();
+
+```
+
+
+## Examples
+View `examples` directory for more usage examples.
+
+
 
 
 ## Contributing
