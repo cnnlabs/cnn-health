@@ -9,7 +9,7 @@ module.exports = class Check {
      * constructor
      *
      * @param {object} config - check settings
-     * @param {func|null} onStatusChange - called when status changes with current state
+     * @param {func|null} onStatusChange - called when status changes with instance of check
      */
     constructor(config, onStatusChange = null) {
         // properties
@@ -60,8 +60,8 @@ module.exports = class Check {
      */
     start() {
         if (this._timer) return;
-        this._timer = setInterval(this._tick, this._interval);
         this._transition(CHECK_STATUS.PENDING);
+        this._timer = setInterval(this._tick.bind(this), this._interval);
     }
 
     /**
@@ -69,8 +69,8 @@ module.exports = class Check {
      */
     stop() {
         if (!this._timer) return;
-        clearInterval(this._timer);
         this._transition(CHECK_STATUS.STOPPED);
+        clearInterval(this._timer);
     }
 
     /**

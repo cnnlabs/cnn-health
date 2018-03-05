@@ -81,13 +81,26 @@ describe('Health', () => {
             const expectedState = {passed: true, output: null};
             const checkName = 'test-check';
             const mockCheck = new MockCheck(checkName, expectedState);
-            const health = new Health([]);
+            const health = new Health([mockCheck]);
 
             // sut
             health._handleStatusChange(mockCheck);
 
             // assert
             expect(health.currentState[checkName]).toEqual(expectedState);
+        });
+
+        it('should notify listeners on state change', () => {
+            const mockChangeListener = jest.fn();
+            const mockCheck = new MockCheck('test-check', {passed: true, output: null});
+            const health = new Health([mockCheck], mockChangeListener);
+
+            // sut
+            health._handleStatusChange(mockCheck);
+
+            // assert
+            expect(mockChangeListener).toHaveBeenCalledTimes(1);
+            expect(mockChangeListener).toHaveBeenCalledWith(health._state);
         });
     });
 });

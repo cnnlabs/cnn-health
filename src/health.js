@@ -9,8 +9,12 @@ module.exports = class Health {
      * constructor
      *
      * @param {array} checks - healthchecks
+     * @param {func} onStatusChange - called when status changes with current state
      */
-    constructor(checks) {
+    constructor(checks, onStatusChange = null) {
+        // assign status change listener
+        this._onStatusChange = onStatusChange;
+
         // initial state
         this._state = {
             status: CHECK_STATUS.STOPPED,
@@ -21,7 +25,7 @@ module.exports = class Health {
         // init checks
         this._checks = checks.map(cfg => {
             // create check object
-            const check = makeCheck(cfg, this._handleStatusChange);
+            const check = makeCheck(cfg, this._handleStatusChange.bind(this));
 
             // record initial state
             this._state[check.name] = check.currentState;
@@ -38,6 +42,9 @@ module.exports = class Health {
     _handleStatusChange(check) {
         // record check status
         this._state[check.name] = check.currentState;
+
+        // notify listeners
+        if (this._onStatusChange) this._onStatusChange(this._state);
     }
 
     /**
