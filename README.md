@@ -1,6 +1,5 @@
 # CNN Health
 
-[![build](https://img.shields.io/travis/cnnlabs/cnn-health/master.svg?style=flat-square)](https://travis-ci.org/cnnlabs/cnn-health)
 ![node](https://img.shields.io/node/v/cnn-health.svg?style=flat-square)
 [![npm](https://img.shields.io/npm/v/cnn-health.svg?style=flat-square)](https://www.npmjs.com/package/cnn-health)
 [![npm-downloads](https://img.shields.io/npm/dm/cnn-health.svg?style=flat-square)](https://www.npmjs.com/package/cnn-health)
@@ -8,19 +7,77 @@
 
 ## Requirements
 
-[Node 4.2.6+](https://npmjs.org)
+[Node 8.0.0+](https://npmjs.org)
 
 
 ## Installation
 
 ```shell
-$ npm install
+$ npm install :repo_url
 ```
-
 
 ## Usage
 
-See example/app.js
+- create config obj with checks you wish to run
+- create health object from config
+- start health checks
+- inspect health status as needed
+- and/or supply a callback for status change notifications
+
+```javascript
+const Health = require('cnn-health');
+
+// healthchecks
+const config = [
+    {
+        // type of adapter to use
+        type: 'json',
+
+        // description of this check
+        description: {
+            name: 'example-check',
+            severity: 'BAD',
+            panicGuide: "Don't Panic",
+            businessImpact: 'Who Knows',
+            technicalSummary: '...'
+        },
+
+        // options for adapter
+        options: {
+            url: 'http://localhost/example.json',
+            callback(data) {
+                return true;
+            }
+        }
+    }
+];
+
+// status-change handler
+function onStatusChange(nextState) {
+    console.log(nextState.healthy);
+    console.log(nextState.status);
+    console.log(nextState.checks);
+}
+
+// create instance of cnn-health with config and optional callback
+const health = new Health(config, onStatusChange);
+
+// start health checks
+health.start();
+
+// retrieve current state of all checks
+health.currentState;
+
+// stop health checks
+health.stop();
+
+```
+
+
+## Examples
+View `examples` directory for more usage examples.
+
+
 
 
 ## Contributing
