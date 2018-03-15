@@ -5,10 +5,8 @@
   "main": "src/health.js",
   "license": "ISC",
   "scripts": {
-    "generate:changelog": "changelog-maker --group",
-    "generate:docs": "rm -rf docs && esdoc -c .esdoc.json",
     "test": "eslint *.js **/*.js && jest",
-    "test:cov": "./node_modules/.bin/jest --coverage"
+    "test:cov": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,7 +21,6 @@
   },
   "dependencies": {
     "debug": "3.1.0",
-    "fetchres": "1.7.2",
     "isomorphic-fetch": "2.2.1",
     "ms": "2.0.0"
   },
