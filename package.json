@@ -1,6 +1,6 @@
 {
   "name": "cnn-health",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "CNN Health",
   "main": "src/health.js",
   "license": "ISC",
