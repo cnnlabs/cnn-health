@@ -1,5 +1,13 @@
 # CNN Health Changelog
 
+
+## 2018-03-13, Version 0.3.0, @harryatoms
+
+### Notable changes
+- refactored library, major api changes 🔥
+- see README.md for additional release documentation
+- example express server with healthcheck route
+
 ## 2016-04-26, Version 0.2.0, @adslaton
 
 ### Notable changes

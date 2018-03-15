@@ -82,6 +82,4 @@ View `examples` directory for more usage examples.
 
 ## Contributing
 
-If you would like to contribute, just fork and submit a pull request.  Please
-review the [contributing guidelines](./CONTRIBUTING.md)
-first.
+If you would like to contribute, just fork and submit a pull request.
